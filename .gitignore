@@ -1,0 +1,10 @@
+*.iml
+*.png
+*.pdf
+.idea
+target
+.classpath
+.project
+.settings/
+*.docx
+
