@@ -84,6 +84,8 @@ public class DocGenerator {
 		comment.setResume("This book tells us a story about passion and computing");
 		comment.setExtrait("To be or not to be - \uc3b1");
 		comment.setAppreciation("Love this book, good work by McNabb");
+		comment.setOptional_one("Elements for a criticism");
+		comment.setOptional_two("Q: how to deal with great minds?");
 
 		comments.add(comment);
 
@@ -245,6 +247,12 @@ public class DocGenerator {
 
 				p4 = doc.createParagraph();
 				setParagraph(p4, language.getString("appreciation"), comment.getAppreciation());
+
+				p4 = doc.createParagraph();
+				setParagraph(p4, language.getString("optional_one"), comment.getOptional_one());
+
+				p4 = doc.createParagraph();
+				setParagraph(p4, language.getString("optional_two"), comment.getOptional_two());
 
 			} catch (NullPointerException ex) {
 
