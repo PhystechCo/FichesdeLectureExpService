@@ -72,6 +72,8 @@ public class DocGenerator {
 		book.setCollection("Computing collection");
 		book.setPages(111);
 		book.setLanguage("English");
+		book.setTranslation("Edited and translated by Alain Disjktra");
+		book.setOptional_one("Medieval");
 		fiche.setBook(book);
 
 		List<Comment> comments = new ArrayList<Comment>();
@@ -207,6 +209,12 @@ public class DocGenerator {
 		
 		p2 = doc.createParagraph();
 		setBookParagraph(p2, language.getString("language"), fiche.getBook().getLanguage());
+		
+		p2 = doc.createParagraph();
+		setBookParagraph(p2, language.getString("translation"), fiche.getBook().getTranslation());
+		
+		p2 = doc.createParagraph();
+		setBookParagraph(p2, language.getString("book_optional_one"), fiche.getBook().getOptional_one());
 
 		Iterator<Comment> itrComment = fiche.getComments().iterator();
 
