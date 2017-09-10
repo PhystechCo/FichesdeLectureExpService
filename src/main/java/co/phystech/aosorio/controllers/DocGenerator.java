@@ -74,6 +74,8 @@ public class DocGenerator {
 		book.setLanguage("English");
 		book.setTranslation("Edited and translated by Alain Disjktra");
 		book.setOptional_one("Medieval");
+		book.setAuthor_nationality("Dutch");
+		book.setAuthor_period("1980:2000");
 		fiche.setBook(book);
 
 		List<Comment> comments = new ArrayList<Comment>();
@@ -88,6 +90,8 @@ public class DocGenerator {
 		comment.setAppreciation("Love this book, good work by McNabb");
 		comment.setOptional_one("Elements for a criticism");
 		comment.setOptional_two("Q: how to deal with great minds?");
+		comment.setComment_text("No comments - what a great book");
+		comment.setOther_details("Many details were left outside outside our review");
 
 		comments.add(comment);
 
@@ -196,6 +200,12 @@ public class DocGenerator {
 		setBookParagraph(p2, language.getString("author"), fiche.getBook().getAuthor());
 		
 		p2 = doc.createParagraph();
+		setBookParagraph(p2, language.getString("author_nationality"), fiche.getBook().getAuthor_nationality());
+		
+		p2 = doc.createParagraph();
+		setBookParagraph(p2, language.getString("author_period"), fiche.getBook().getAuthor_period());
+		
+		p2 = doc.createParagraph();
 		setBookParagraph(p2, language.getString("year"), String.valueOf(fiche.getBook().getYearPub()));
 		
 		p2 = doc.createParagraph();
@@ -261,6 +271,12 @@ public class DocGenerator {
 
 				p4 = doc.createParagraph();
 				setParagraph(p4, language.getString("optional_two"), comment.getOptional_two());
+				
+				p4 = doc.createParagraph();
+				setParagraph(p4, language.getString("comment_text"), comment.getComment_text());
+				
+				p4 = doc.createParagraph();
+				setParagraph(p4, language.getString("other_details"), comment.getOther_details());
 
 			} catch (NullPointerException ex) {
 

@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -18,6 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import co.phystech.aosorio.app.Main;
+import co.phystech.aosorio.controllers.XslxGenerator;
+import co.phystech.aosorio.models.Book;
+import co.phystech.aosorio.models.Comment;
+import co.phystech.aosorio.models.NewFichePayload;
 import spark.Spark;
 
 public class ExportSvcTest {
@@ -118,5 +123,62 @@ public class ExportSvcTest {
 		assertTrue(result);
 
 	}
+	
+	@Test
+	public void excelFileTest() { 
+	
+		ArrayList<NewFichePayload> fiches = new ArrayList<NewFichePayload>();
+		
+		String x1 = "X1";
+		
+		Book book = new Book();
+
+		book.setTitle(x1);
+		book.setSubTitle(x1);
+		book.setAuthor(x1);
+		book.setYearPub(2000);
+		book.setEditor(x1);
+		book.setCollection(x1);
+		book.setPages(100);
+		book.setLanguage(x1);
+		book.setTranslation(x1);
+		book.setOptional_one(x1);
+		
+		Comment acomment = new Comment();
+		acomment.setAuthor(x1);
+		acomment.setAboutAuthor(x1);
+		acomment.setAboutGenre(x1);
+		acomment.setAboutCadre(x1);
+		acomment.setAboutCharacters(x1);
+		acomment.setResume(x1);
+		acomment.setExtrait(x1);
+		acomment.setAppreciation(x1);
+		acomment.setIsCompleted(false);
+		
+		List<Comment> comments = new ArrayList<Comment>();
+		comments.add(new Comment());
+
+		NewFichePayload fiche = new NewFichePayload();
+		fiche.setId(1);
+		fiche.setBook(book);
+		fiche.setComments(comments);
+		
+		fiches.add(fiche);
+		
+		XslxGenerator excelGen = new XslxGenerator(fiches);
+		
+		try {
+			
+			excelGen.generate();
+		
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}
+				
+		assertTrue(true);
+		
+	}
+	
 
 }
