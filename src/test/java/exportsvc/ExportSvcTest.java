@@ -130,6 +130,7 @@ public class ExportSvcTest {
 		ArrayList<NewFichePayload> fiches = new ArrayList<NewFichePayload>();
 		
 		String x1 = "X1";
+		String x2 = "X2";
 		
 		Book book = new Book();
 
@@ -143,6 +144,8 @@ public class ExportSvcTest {
 		book.setLanguage(x1);
 		book.setTranslation(x1);
 		book.setOptional_one(x1);
+		book.setAuthor_nationality(x1);
+		book.setAuthor_period(x2);
 		
 		Comment acomment = new Comment();
 		acomment.setAuthor(x1);
@@ -154,9 +157,13 @@ public class ExportSvcTest {
 		acomment.setExtrait(x1);
 		acomment.setAppreciation(x1);
 		acomment.setIsCompleted(false);
-		
+		acomment.setOptional_one(x2);;
+		acomment.setOptional_two(x2);;
+		acomment.setComment_text(x2);;
+		acomment.setOther_details(x2);
+			
 		List<Comment> comments = new ArrayList<Comment>();
-		comments.add(new Comment());
+		comments.add(acomment);
 
 		NewFichePayload fiche = new NewFichePayload();
 		fiche.setId(1);

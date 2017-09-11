@@ -50,6 +50,8 @@ public class XslxGenerator {
 		bookTitles.add(language.getString("title").replace(":", ""));
 		bookTitles.add(language.getString("subtitle").replace(":", ""));
 		bookTitles.add(language.getString("author").replace(":", ""));
+		bookTitles.add(language.getString("author_nationality").replace(":", ""));
+		bookTitles.add(language.getString("author_period").replace(":", ""));
 		bookTitles.add(language.getString("year").replace(":", ""));
 		bookTitles.add(language.getString("editor").replace(":", ""));
 		bookTitles.add(language.getString("collection").replace(":", ""));
@@ -68,6 +70,8 @@ public class XslxGenerator {
 		commentTitles.add(language.getString("appreciation").replace(":", ""));
 		commentTitles.add(language.getString("optional_one").replace(":", ""));
 		commentTitles.add(language.getString("optional_two").replace(":", ""));
+		commentTitles.add(language.getString("comment_text").replace(":", ""));
+		commentTitles.add(language.getString("other_details").replace(":", ""));
 
 	}
 
@@ -121,10 +125,127 @@ public class XslxGenerator {
 			}
 		}
 
-		//...
-
+		//... loop over data
+		// data rows
 		
+		
+		
+		int nrow = 0;
+		
+		Iterator<NewFichePayload> fichesItr = fiches.iterator();
+		
+		while ( fichesItr.hasNext()) {
 			
+			NewFichePayload currentFiche = fichesItr.next();
+			Row dataRow = sheet.createRow(nrow+2);
+			
+			//Book data
+			Cell contentCell = dataRow.createCell(0);
+			contentCell.setCellValue(nrow);
+			//contentCell.setCellStyle(styles.get("header"));
+			
+			contentCell = dataRow.createCell(1);
+			contentCell.setCellValue(currentFiche.getBook().getTitle());
+			contentCell = dataRow.createCell(2);
+			contentCell.setCellValue(currentFiche.getBook().getSubTitle());
+			contentCell = dataRow.createCell(3);
+			contentCell.setCellValue(currentFiche.getBook().getAuthor());
+			contentCell = dataRow.createCell(4);
+			contentCell.setCellValue(currentFiche.getBook().getAuthor_nationality());
+			contentCell = dataRow.createCell(5);
+			contentCell.setCellValue(currentFiche.getBook().getAuthor_period());
+			contentCell = dataRow.createCell(6);
+			contentCell.setCellValue(currentFiche.getBook().getYearPub());
+			contentCell = dataRow.createCell(7);
+			contentCell.setCellValue(currentFiche.getBook().getEditor());
+			contentCell = dataRow.createCell(8);
+			contentCell.setCellValue(currentFiche.getBook().getCollection());
+			contentCell = dataRow.createCell(9);
+			contentCell.setCellValue(currentFiche.getBook().getPages());
+			contentCell = dataRow.createCell(10);
+			contentCell.setCellValue(currentFiche.getBook().getLanguage());
+			contentCell = dataRow.createCell(11);
+			contentCell.setCellValue(currentFiche.getBook().getTranslation());
+			contentCell = dataRow.createCell(12);
+			contentCell.setCellValue(currentFiche.getBook().getOptional_one());
+
+			//Comments
+
+			Iterator<co.phystech.aosorio.models.Comment> commentItr = currentFiche.getComments().iterator();
+			
+			int ncol = 0;
+			while( commentItr.hasNext()) {
+				
+				co.phystech.aosorio.models.Comment currentComment = commentItr.next();
+				
+				//1.
+				ncol++;
+				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellValue(currentComment.getAuthor());
+				
+				//2.
+				ncol++;
+				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellValue(currentComment.getAboutAuthor());
+				
+				//3.
+				ncol++;
+				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellValue(currentComment.getAboutGenre());
+				
+				//4.
+				ncol++;
+				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellValue(currentComment.getAboutCadre());
+				
+				//5.
+				ncol++;
+				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellValue(currentComment.getAboutCharacters());
+				
+				//6.
+				ncol++;
+				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellValue(currentComment.getResume());
+				
+				//7.
+				ncol++;
+				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellValue(currentComment.getExtrait());
+				
+				//8.
+				ncol++;
+				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellValue(currentComment.getAppreciation());
+				
+				//9.
+				ncol++;
+				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellValue(currentComment.getOptional_one());
+				
+				//10.
+				ncol++;
+				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellValue(currentComment.getOptional_two());
+				
+				//11.
+				ncol++;
+				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellValue(currentComment.getComment_text());
+				
+				//12.
+				ncol++;
+				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellValue(currentComment.getOther_details());
+							
+			}
+			
+			nrow++;
+		}
+		
+		
+		//...
+		
 		sheet.setColumnWidth(0, 5 * 256);
 		for (int i = 1; i < maxColumns; i++) {
 			sheet.setColumnWidth(i, 30 * 256); // 6 characters wide
