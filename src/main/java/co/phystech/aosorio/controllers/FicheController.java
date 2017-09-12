@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -63,7 +64,7 @@ public class FicheController {
 			
 		} catch (IOException jpe) {
 		
-			slf4jLogger.info("Problem adding fiche");
+			slf4jLogger.info("Problem creating the DOCX");
 			pResponse.status(Constants.HTTP_BAD_REQUEST);
 			return returnMessage.getNotOkMessage("Problem adding fiche");
 		}
@@ -137,4 +138,75 @@ public class FicheController {
 		return raw;
 	}
 
+	public static Object createFichesExcel(Request pRequest, Response pResponse) {
+
+		BackendMessage returnMessage = new BackendMessage();
+
+		pResponse.type("application/json");
+
+		try {
+
+			ObjectMapper mapper = new ObjectMapper();
+			
+			NewFichePayload[] inputFiches = mapper.readValue(pRequest.body(),NewFichePayload[].class);
+							
+			XslxGenerator xlsxGen = new XslxGenerator(Arrays.asList(inputFiches));
+			
+			xlsxGen.generate();
+
+			slf4jLogger.info(pRequest.body());
+
+			pResponse.status(200);
+
+			return returnMessage.getOkMessage(String.valueOf(0));
+
+		} catch (NullPointerException ex) {
+		
+			slf4jLogger.info("Problem adding fiche - incomplete fiche");
+			pResponse.status(Constants.HTTP_BAD_REQUEST);
+			return returnMessage.getNotOkMessage("Problem adding fiche");
+			
+		} catch (IOException jpe) {
+		
+			slf4jLogger.info("Problem adding fiche");
+			pResponse.status(Constants.HTTP_BAD_REQUEST);
+			return returnMessage.getNotOkMessage("IO Problem creating the Excel");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return returnMessage.getNotOkMessage("Problem creating the Excel");
+		}
+
+	}
+	
+	public static Object getFichesExcel(Request pRequest, Response pResponse) {
+
+		slf4jLogger.info(pRequest.headers().toString());
+
+		pResponse.type("application/json");
+		
+		BackendMessage response = new BackendMessage();
+
+		try {
+
+			slf4jLogger.info("Sending file");
+
+			Path path = Paths.get("./" + "fichelist.xlsx");
+
+			String docx64Encoded = GeneralSvc.convertFileToString(path.toFile());
+
+			return response.getOkMessage(docx64Encoded);
+
+		} catch (NullPointerException e1) {
+			e1.printStackTrace();	
+		} catch (InvalidPathException e2) {
+			e2.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return response.getNotOkMessage("File not generated");
+		
+	}
+	
 }

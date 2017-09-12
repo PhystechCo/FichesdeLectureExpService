@@ -30,6 +30,10 @@ public class Main {
 		post(Routes.FICHES, FicheController::createFicheDocx, GeneralSvc.json());
 
 		get(Routes.FICHES, FicheController::getFicheDocx, GeneralSvc.json());
+		
+		post(Routes.FICHES + "/excel", FicheController::createFichesExcel, GeneralSvc.json());
+
+		get(Routes.FICHES + "/excel", FicheController::getFichesExcel, GeneralSvc.json());
 
 		get(Routes.FICHESRAW, FicheController::getFicheRaw);
 
