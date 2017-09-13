@@ -1,32 +1,42 @@
 package co.phystech.aosorio.controllers;
 
-import org.apache.poi.xssf.usermodel.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import co.phystech.aosorio.models.NewFichePayload;
-
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.usermodel.*;
-
-import java.util.Map;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.Map;
+import java.util.Properties;
+import java.util.ResourceBundle;
+
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.PrintSetup;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import co.phystech.aosorio.models.Fiche;
 
 public class XslxGenerator {
 
 	private final static Logger slf4jLogger = LoggerFactory.getLogger(XslxGenerator.class);
 
-	private List<NewFichePayload> fiches;
+	private List<Fiche> fiches;
 	private String cfg_language;
 	private String cfg_country;
 
@@ -34,7 +44,7 @@ public class XslxGenerator {
 	private static List<String> bookTitles;
 	private static List<String> commentTitles;
 
-	public XslxGenerator(List<NewFichePayload> fiches) {
+	public XslxGenerator(List<Fiche> fiches) {
 		super();
 		this.fiches = fiches;
 
@@ -127,46 +137,70 @@ public class XslxGenerator {
 
 		//... loop over data
 		// data rows
-		
-		
-		
+				
 		int nrow = 0;
 		
-		Iterator<NewFichePayload> fichesItr = fiches.iterator();
+		Iterator<Fiche> fichesItr = fiches.iterator();
 		
 		while ( fichesItr.hasNext()) {
 			
-			NewFichePayload currentFiche = fichesItr.next();
+			Fiche currentFiche = fichesItr.next();
 			Row dataRow = sheet.createRow(nrow+2);
 			
 			//Book data
 			Cell contentCell = dataRow.createCell(0);
+			contentCell.setCellStyle(styles.get("cell"));
 			contentCell.setCellValue(nrow);
+			
 			//contentCell.setCellStyle(styles.get("header"));
 			
 			contentCell = dataRow.createCell(1);
+			contentCell.setCellStyle(styles.get("cell"));
 			contentCell.setCellValue(currentFiche.getBook().getTitle());
+			
 			contentCell = dataRow.createCell(2);
+			contentCell.setCellStyle(styles.get("cell"));
+
 			contentCell.setCellValue(currentFiche.getBook().getSubTitle());
+			
 			contentCell = dataRow.createCell(3);
+			contentCell.setCellStyle(styles.get("cell"));
 			contentCell.setCellValue(currentFiche.getBook().getAuthor());
+			
 			contentCell = dataRow.createCell(4);
+			contentCell.setCellStyle(styles.get("cell"));
 			contentCell.setCellValue(currentFiche.getBook().getAuthor_nationality());
+
 			contentCell = dataRow.createCell(5);
+			contentCell.setCellStyle(styles.get("cell"));
 			contentCell.setCellValue(currentFiche.getBook().getAuthor_period());
+
 			contentCell = dataRow.createCell(6);
+			contentCell.setCellStyle(styles.get("cell"));
 			contentCell.setCellValue(currentFiche.getBook().getYearPub());
+			
 			contentCell = dataRow.createCell(7);
+			contentCell.setCellStyle(styles.get("cell"));
 			contentCell.setCellValue(currentFiche.getBook().getEditor());
+			
 			contentCell = dataRow.createCell(8);
+			contentCell.setCellStyle(styles.get("cell"));
 			contentCell.setCellValue(currentFiche.getBook().getCollection());
+			
 			contentCell = dataRow.createCell(9);
+			contentCell.setCellStyle(styles.get("cell"));
 			contentCell.setCellValue(currentFiche.getBook().getPages());
+			
 			contentCell = dataRow.createCell(10);
+			contentCell.setCellStyle(styles.get("cell"));
 			contentCell.setCellValue(currentFiche.getBook().getLanguage());
+			
 			contentCell = dataRow.createCell(11);
+			contentCell.setCellStyle(styles.get("cell"));
 			contentCell.setCellValue(currentFiche.getBook().getTranslation());
+			
 			contentCell = dataRow.createCell(12);
+			contentCell.setCellStyle(styles.get("cell"));
 			contentCell.setCellValue(currentFiche.getBook().getOptional_one());
 
 			//Comments
@@ -181,61 +215,73 @@ public class XslxGenerator {
 				//1.
 				ncol++;
 				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellStyle(styles.get("cell"));
 				contentCell.setCellValue(currentComment.getAuthor());
 				
 				//2.
 				ncol++;
 				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellStyle(styles.get("cell"));
 				contentCell.setCellValue(currentComment.getAboutAuthor());
 				
 				//3.
 				ncol++;
 				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellStyle(styles.get("cell"));
 				contentCell.setCellValue(currentComment.getAboutGenre());
 				
 				//4.
 				ncol++;
 				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellStyle(styles.get("cell"));
 				contentCell.setCellValue(currentComment.getAboutCadre());
 				
 				//5.
 				ncol++;
 				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellStyle(styles.get("cell"));
 				contentCell.setCellValue(currentComment.getAboutCharacters());
 				
 				//6.
 				ncol++;
 				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellStyle(styles.get("cell"));
 				contentCell.setCellValue(currentComment.getResume());
 				
 				//7.
 				ncol++;
 				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellStyle(styles.get("cell"));
 				contentCell.setCellValue(currentComment.getExtrait());
 				
 				//8.
 				ncol++;
 				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellStyle(styles.get("cell"));
 				contentCell.setCellValue(currentComment.getAppreciation());
 				
 				//9.
 				ncol++;
 				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellStyle(styles.get("cell"));
 				contentCell.setCellValue(currentComment.getOptional_one());
 				
 				//10.
 				ncol++;
 				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellStyle(styles.get("cell"));
 				contentCell.setCellValue(currentComment.getOptional_two());
 				
 				//11.
 				ncol++;
 				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellStyle(styles.get("cell"));
 				contentCell.setCellValue(currentComment.getComment_text());
 				
 				//12.
 				ncol++;
 				contentCell = dataRow.createCell(12+ncol);
+				contentCell.setCellStyle(styles.get("cell"));
 				contentCell.setCellValue(currentComment.getOther_details());
 							
 			}
@@ -261,10 +307,10 @@ public class XslxGenerator {
 
 	}
 
-	private int getMaxComments(List<NewFichePayload> fiches) {
+	private int getMaxComments(List<Fiche> fiches) {
 
 		ArrayList<Integer> arrayList = new ArrayList<Integer>();
-		Iterator<NewFichePayload> itrFiches = fiches.iterator();
+		Iterator<Fiche> itrFiches = fiches.iterator();
 
 		while (itrFiches.hasNext()) {
 			int nco = itrFiches.next().getComments().size();

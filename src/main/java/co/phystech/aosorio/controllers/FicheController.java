@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import co.phystech.aosorio.config.Constants;
 import co.phystech.aosorio.models.BackendMessage;
+import co.phystech.aosorio.models.Fiche;
 import co.phystech.aosorio.models.NewFichePayload;
 import spark.Request;
 import spark.Response;
@@ -144,17 +145,21 @@ public class FicheController {
 
 		pResponse.type("application/json");
 
+		slf4jLogger.info(pRequest.body());
+		
 		try {
 
 			ObjectMapper mapper = new ObjectMapper();
 			
-			NewFichePayload[] inputFiches = mapper.readValue(pRequest.body(),NewFichePayload[].class);
+			Fiche[] inputFiches = mapper.readValue(pRequest.body(),Fiche[].class);
 							
+			slf4jLogger.info("Input is fine");
+			
 			XslxGenerator xlsxGen = new XslxGenerator(Arrays.asList(inputFiches));
 			
-			xlsxGen.generate();
+			slf4jLogger.info("Excel generator constructed");
 
-			slf4jLogger.info(pRequest.body());
+			xlsxGen.generate();
 
 			pResponse.status(200);
 
@@ -167,7 +172,7 @@ public class FicheController {
 			return returnMessage.getNotOkMessage("Problem adding fiche");
 			
 		} catch (IOException jpe) {
-		
+			jpe.printStackTrace();
 			slf4jLogger.info("Problem adding fiche");
 			pResponse.status(Constants.HTTP_BAD_REQUEST);
 			return returnMessage.getNotOkMessage("IO Problem creating the Excel");

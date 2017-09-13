@@ -1,6 +1,7 @@
 package exportsvc;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,7 +23,7 @@ import co.phystech.aosorio.app.Main;
 import co.phystech.aosorio.controllers.XslxGenerator;
 import co.phystech.aosorio.models.Book;
 import co.phystech.aosorio.models.Comment;
-import co.phystech.aosorio.models.NewFichePayload;
+import co.phystech.aosorio.models.Fiche;
 import spark.Spark;
 
 public class ExportSvcTest {
@@ -127,7 +128,7 @@ public class ExportSvcTest {
 	@Test
 	public void excelFileTest() { 
 	
-		ArrayList<NewFichePayload> fiches = new ArrayList<NewFichePayload>();
+		ArrayList<Fiche> fiches = new ArrayList<Fiche>();
 		
 		String x1 = "X1";
 		String x2 = "X2";
@@ -165,7 +166,7 @@ public class ExportSvcTest {
 		List<Comment> comments = new ArrayList<Comment>();
 		comments.add(acomment);
 
-		NewFichePayload fiche = new NewFichePayload();
+		Fiche fiche = new Fiche();
 		fiche.setId(1);
 		fiche.setBook(book);
 		fiche.setComments(comments);
