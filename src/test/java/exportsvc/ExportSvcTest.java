@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import co.phystech.aosorio.app.Main;
+import co.phystech.aosorio.config.Constants;
 import co.phystech.aosorio.controllers.XslxGenerator;
 import co.phystech.aosorio.models.Book;
 import co.phystech.aosorio.models.Comment;
@@ -53,7 +54,7 @@ public class ExportSvcTest {
 		int httpResult = 0;
 		String httpMessage = "";
 
-		String serverPath = "http://localhost:4567/users/fiches/raw";
+		String serverPath = "http://localhost:" + Constants.DEFAULT_SERVER_PORT + "/users/fiches/raw";
 		//String tmpFilePath = "";
 		String saveDir = "";
 		URL appUrl;
@@ -113,10 +114,10 @@ public class ExportSvcTest {
 				slf4jLogger.info("No file to download. Server replied HTTP code: " + httpResult);
 			}
 			
-		} catch (IOException e) {
+		} catch (IOException ex) {
 			
-			slf4jLogger.info("downloadTest> fails " + e.getLocalizedMessage());
-			e.printStackTrace();
+			slf4jLogger.info("downloadTest> fails " + ex.getLocalizedMessage());
+			ex.printStackTrace();
 		}
 		
 		assertEquals(200, httpResult);

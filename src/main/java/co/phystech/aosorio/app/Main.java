@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import co.phystech.aosorio.config.Constants;
 import co.phystech.aosorio.config.CorsFilter;
 import co.phystech.aosorio.config.Routes;
 import co.phystech.aosorio.controllers.DocGenerator;
@@ -71,7 +72,7 @@ public class Main {
 		if (processBuilder.environment().get("PORT") != null) {
 			return Integer.parseInt(processBuilder.environment().get("PORT"));
 		}
-		return 4569;
+		return Constants.DEFAULT_SERVER_PORT;
 	}
 
 }
