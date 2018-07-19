@@ -396,8 +396,8 @@ public class XslxGenerator {
 			cfg_language = prop.getProperty("locale.language");
 			cfg_country = prop.getProperty("locale.country");
 
-		} catch (IOException ex) {
-			ex.printStackTrace();
+		} catch (IOException e1) {
+			slf4jLogger.info("Exception 1: " + e1.getLocalizedMessage());
 			cfg_language = "en";
 			cfg_country = "US";
 
@@ -405,8 +405,8 @@ public class XslxGenerator {
 			if (input != null) {
 				try {
 					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException e2) {
+					slf4jLogger.info("Exception 2: " + e2.getLocalizedMessage());
 				}
 			}
 		}

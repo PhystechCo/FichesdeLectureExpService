@@ -282,9 +282,9 @@ public class DocGenerator {
 
 				slf4jLogger.info("There is a problem with comment");
 
-			} catch (Exception ex) {
+			} catch (Exception e1) {
 
-				ex.printStackTrace();
+				slf4jLogger.info("Exception 1: " + e1.getLocalizedMessage());
 			}
 
 			counter += 1;
@@ -299,10 +299,10 @@ public class DocGenerator {
 			out.close();
 			doc.close();
 
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (FileNotFoundException e1) {
+			slf4jLogger.info("Exception 1: " + e1.getLocalizedMessage());
+		} catch (IOException e2) {
+			slf4jLogger.info("Exception 2: " + e2.getLocalizedMessage());
 		}
 
 	}
@@ -349,8 +349,8 @@ public class DocGenerator {
 			cfg_language = prop.getProperty("locale.language");
 			cfg_country = prop.getProperty("locale.country");
 			
-		} catch (IOException ex) {
-			ex.printStackTrace();
+		} catch (IOException e1) {
+			slf4jLogger.info("Exception 1: " + e1.getLocalizedMessage());
 			cfg_language = "en";
 			cfg_country = "US";
 			
@@ -358,8 +358,8 @@ public class DocGenerator {
 			if (input != null) {
 				try {
 					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException e1) {
+					slf4jLogger.info("Exception 1: " + e1.getLocalizedMessage());
 				}
 			}
 		}

@@ -91,11 +91,11 @@ public class FicheController {
 			return response.getOkMessage(docx64Encoded);
 
 		} catch (NullPointerException e1) {
-			e1.printStackTrace();	
+			slf4jLogger.info("Exception 1: " + e1.getLocalizedMessage());
 		} catch (InvalidPathException e2) {
-			e2.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			slf4jLogger.info("Exception 1: " + e2.getLocalizedMessage());
+		} catch (IOException e3) {
+			slf4jLogger.info("Exception 1: " + e3.getLocalizedMessage());
 		}
 
 		return response.getNotOkMessage("File not generated");
@@ -132,9 +132,8 @@ public class FicheController {
 			raw.getOutputStream().flush();
 			raw.getOutputStream().close();
 
-		} catch (Exception e) {
-
-			e.printStackTrace();
+		} catch (Exception e1) {
+			slf4jLogger.info("Exception 1: " + e1.getLocalizedMessage());
 		}
 		return raw;
 	}
@@ -165,20 +164,20 @@ public class FicheController {
 
 			return returnMessage.getOkMessage(String.valueOf(0));
 
-		} catch (NullPointerException ex) {
-		
+		} catch (NullPointerException e1) {		
 			slf4jLogger.info("Problem adding fiche - incomplete fiche");
+			slf4jLogger.info("Exception 1: " + e1.getLocalizedMessage());
 			pResponse.status(Constants.HTTP_BAD_REQUEST);
 			return returnMessage.getNotOkMessage("Problem adding fiche");
 			
-		} catch (IOException jpe) {
-			jpe.printStackTrace();
-			slf4jLogger.info("Problem adding fiche");
+		} catch (IOException e2) {
+			slf4jLogger.info("Exception 2: " + e2.getLocalizedMessage());
 			pResponse.status(Constants.HTTP_BAD_REQUEST);
 			return returnMessage.getNotOkMessage("IO Problem creating the Excel");
 			
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e3) {
+			slf4jLogger.info("Exception 3: " + e3.getLocalizedMessage());
+			pResponse.status(Constants.HTTP_BAD_REQUEST);
 			return returnMessage.getNotOkMessage("Problem creating the Excel");
 		}
 
@@ -203,11 +202,11 @@ public class FicheController {
 			return response.getOkMessage(docx64Encoded);
 
 		} catch (NullPointerException e1) {
-			e1.printStackTrace();	
+			slf4jLogger.info("Exception 1: " + e1.getLocalizedMessage());
 		} catch (InvalidPathException e2) {
-			e2.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			slf4jLogger.info("Exception 1: " + e2.getLocalizedMessage());
+		} catch (IOException e3) {
+			slf4jLogger.info("Exception 1: " + e3.getLocalizedMessage());
 		}
 
 		return response.getNotOkMessage("File not generated");
