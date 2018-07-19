@@ -4,6 +4,9 @@ import static spark.Spark.*;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import co.phystech.aosorio.config.CorsFilter;
 import co.phystech.aosorio.config.Routes;
 import co.phystech.aosorio.controllers.DocGenerator;
@@ -13,6 +16,8 @@ import co.phystech.aosorio.services.GeneralSvc;
 
 public class Main {
 
+	private final static Logger slf4jLogger = LoggerFactory.getLogger(Main.class);
+	
 	public static void main(String[] args) {
 
 		port(getHerokuAssignedPort());
@@ -42,7 +47,7 @@ public class Main {
 			try {
 				docgen.generate();
 			} catch (IOException e) {
-				e.printStackTrace();
+				slf4jLogger.info("Error generating default doc: " + e.getMessage());
 			}
 		}
 
@@ -66,7 +71,7 @@ public class Main {
 		if (processBuilder.environment().get("PORT") != null) {
 			return Integer.parseInt(processBuilder.environment().get("PORT"));
 		}
-		return 4567;
+		return 4569;
 	}
 
 }
